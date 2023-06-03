@@ -1,4 +1,7 @@
 import pygame
+from events.events import handle_events
+from drawing.drawing import draw, draw_circle, update_display
+from movement.movement import handle_movement, clamp
 
 def initialize_game():
     """Inicializa o Pygame e configura a janela do jogo."""
@@ -7,40 +10,12 @@ def initialize_game():
     pygame.display.set_caption('Reisen Fortsetter')
     return gameWindow
 
-def draw(gameWindow):
-    """Preenche a janela do jogo com uma cor de fundo."""
-    gameWindow.fill([119, 136, 153])
-
-def handle_events():
-    """Lida com os eventos do Pygame, como fechar a janela do jogo."""
-    for event in pygame.event.get(): 
-        if event.type == pygame.QUIT:
-            pygame.quit()
-
-def handle_movement(comands, x, y, speed):
-    """Lida com o movimento do objeto com base nas teclas pressionadas."""
-    if comands[pygame.K_UP]:
-        y -= speed
-    elif comands[pygame.K_DOWN]:
-        y += speed
-    elif comands[pygame.K_LEFT]:
-        x -= speed
-    elif comands[pygame.K_RIGHT]:
-        x += speed
-    return x, y
-
-def draw_circle(gameWindow, x, y):
-    """Desenha um círculo na janela do jogo nas coordenadas (x, y)."""
-    pygame.draw.circle(gameWindow, (0,255,0), (x, y), 50)
-
-def update_display():
-    """Atualiza a exibição da janela do jogo."""
-    pygame.display.update()
-
 def game_loop(gameWindow):
     """Loop principal do jogo."""
     gameLoop = True
     x, y, speed = 600, 300, 0.5
+    window_width, window_height = gameWindow.get_size()
+    circle_radius = 50
     
     pygame.time.delay(50)
 
@@ -49,6 +24,10 @@ def game_loop(gameWindow):
 
         comands = pygame.key.get_pressed()
         x, y = handle_movement(comands, x, y, speed)
+
+        # Limita as coordenadas x e y dentro dos limites da janela
+        x = clamp(x, circle_radius, window_width - circle_radius)
+        y = clamp(y, circle_radius, window_height - circle_radius)
 
         draw(gameWindow)
         draw_circle(gameWindow, x, y)

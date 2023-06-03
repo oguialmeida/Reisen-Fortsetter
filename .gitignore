@@ -1,1 +1,4 @@
 /venv
+/events/__pycache__
+/movement/__pycache__
+/drawing/__pycache__
