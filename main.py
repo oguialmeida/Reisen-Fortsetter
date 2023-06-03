@@ -1,7 +1,7 @@
 import pygame
-from events.events import handle_events
-from drawing.drawing import draw, draw_circle, update_display
-from movement.movement import handle_movement, clamp
+from utils.events import handle_events
+from utils.drawing import draw, draw_circle, update_display
+from utils.movement import handle_movement, clamp
 
 def initialize_game():
     """Inicializa o Pygame e configura a janela do jogo."""
