@@ -4,14 +4,16 @@ from utils.drawing import draw, draw_circle, update_display
 from utils.movement import handle_movement, clamp
 
 def initialize_game():
-    """Inicializa o Pygame e configura a janela do jogo."""
+    # Inicializa o Pygame e configura a janela do jogo.
     pygame.init()
     gameWindow = pygame.display.set_mode([1200, 600])
+    img = pygame.image.load('./assets/logo-white.png')
+    pygame.display.set_icon(img)
     pygame.display.set_caption('Reisen Fortsetter')
     return gameWindow
 
 def game_loop(gameWindow):
-    """Loop principal do jogo."""
+    # Loop principal do jogo.
     gameLoop = True
     x, y, speed = 600, 300, 0.5
     window_width, window_height = gameWindow.get_size()
